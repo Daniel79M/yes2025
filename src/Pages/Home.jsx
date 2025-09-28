@@ -1,10 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { 
   Calendar, 
   MapPin, 
@@ -36,7 +32,6 @@ import AudienceSection from '../Components/youth-explore/AudienceSection';
 import KeyInfoSection from '../Components/youth-explore/KeyInfoSection';
 import PartnersSection from '../Components/youth-explore/PartnersSection';
 import NewsletterSection from '../Components/youth-explore/NewsletterSection';
-import { createPageUrl } from '@/utils';
 import yex2025 from '@/assets/yex2025logo.jpg'
 
 
