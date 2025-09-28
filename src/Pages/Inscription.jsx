@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import yex2025 from '@/assets/yex2025logo.jpg'
 import { 
   User, 
   Mail, 
@@ -152,7 +153,7 @@ export default function Inscription() {
               <p className="text-gray-600 mb-6">
                 Merci pour votre inscription à Youth Explore 2025. Vous recevrez un email de confirmation avec tous les détails.
               </p>
-              <Link to={createPageUrl("Home")}>
+              <Link to={"/"}>
                 <Button className="bg-blue-800 hover:bg-blue-900 text-white">
                   Retour à l'accueil
                 </Button>
@@ -176,11 +177,12 @@ export default function Inscription() {
             </Button>
           </Link>
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-800 to-indigo-900 rounded-lg flex items-center justify-center">
+            <img src={yex2025} alt="yex2025 logo" className='w-[200px]'/>
+            {/* <div className="w-10 h-10 bg-gradient-to-r from-blue-800 to-indigo-900 rounded-lg flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-yellow-400" />
             </div>
             <span className="text-xl font-bold text-blue-900">Youth Explore</span>
-            <Badge className="bg-yellow-400 text-blue-900 border-yellow-500">2025</Badge>
+            <Badge className="bg-yellow-400 text-blue-900 border-yellow-500">2025</Badge> */}
           </div>
         </div>
 
@@ -191,11 +193,12 @@ export default function Inscription() {
           <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center space-x-1">
               <Calendar className="w-4 h-4 text-yellow-500" />
-              <span>27 novembre 2025</span>
+              <span>27 novembre 2025 de </span> 
+              <span>8H30 à 16h30</span>
             </div>
             <div className="flex items-center space-x-1">
               <MapPin className="w-4 h-4 text-yellow-500" />
-              <span>Lomé + En ligne</span>
+              <span>UNIPOD- Université de Lomé </span>
             </div>
           </div>
         </div>

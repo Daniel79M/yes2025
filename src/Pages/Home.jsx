@@ -110,7 +110,7 @@ export default function Home() {
             </div>
 
             {/* The 'S'inscrire' button is now wrapped with a Link component for navigation */}
-            <Link to={createPageUrl("Inscription")}>
+            <Link to={"/inscription"}>
               <Button 
                 className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-blue-900 font-bold"
               >
