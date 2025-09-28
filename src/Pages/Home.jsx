@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
 import { 
   Calendar, 
   MapPin, 
@@ -106,11 +105,11 @@ export default function Home() {
 
             {/* The 'S'inscrire' button is now wrapped with a Link component for navigation */}
             <Link to={"/inscription"}>
-              <Button 
-                className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-blue-900 font-bold"
+              <button 
+                className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-blue-900 font-bold p-2 rounded-[10px]"
               >
                 S'inscrire
-              </Button>
+              </button>
             </Link>
           </div>
         </div>
