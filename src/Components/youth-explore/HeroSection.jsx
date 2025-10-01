@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge"; // Keep Badge import for now, might be removed later if not used
-import { Calendar, MapPin, Globe, Play, ArrowRight, Sparkles } from 'lucide-react'; // Keep Sparkles and Play for now, might be removed later if not used
+import { Calendar, MapPin, Globe, Play, ArrowRight, Sparkles, Clock } from 'lucide-react'; // Keep Sparkles and Play for now, might be removed later if not used
 import { motion } from 'framer-motion';
 import { createPageUrl } from '@/utils';
 
@@ -57,7 +57,7 @@ export default function HeroSection() {
               Youth Explore
             </span>
             <span className="block text-3xl md:text-4xl lg:text-5xl mt-2 text-white/90">
-              2025
+              YEX2025
             </span>
           </motion.h1>
 
@@ -94,11 +94,11 @@ export default function HeroSection() {
             </div>
             <div className="flex items-center space-x-2 text-white/90">
               <MapPin className="w-6 h-6 text-yellow-400" />
-              <span className="font-semibold">Lomé</span>
+              <span className="font-semibold">UNIPOD,Lomé</span>
             </div>
             <div className="flex items-center space-x-2 text-white/90">
-              <Globe className="w-6 h-6 text-yellow-400" />
-              <span className="font-semibold">Format hybride</span>
+              <Clock className="w-6 h-6 text-yellow-400" />
+              <span className="font-semibold">08:30 AM-6:00 PM</span>
             </div>
           </motion.div>
 

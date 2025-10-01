@@ -108,7 +108,7 @@ export default function Home() {
               <button 
                 className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-blue-900 font-bold p-2 rounded-[10px]"
               >
-                S'inscrire
+                S'inscrire maintenant
               </button>
             </Link>
           </div>
@@ -119,10 +119,10 @@ export default function Home() {
       <main className="pt-16 bg-gray-50">
         <HeroSection />
         <WhySection />
+        <AudienceSection />
         <ExperienceSection />
         <ThematicsSection />
         <IntervenantsSection />
-        <AudienceSection />
         <KeyInfoSection />
         <PartnersSection />
         <NewsletterSection />

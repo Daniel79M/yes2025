@@ -9,13 +9,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import yex2025 from '@/assets/yex2025logo.jpg'
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Building, 
-  GraduationCap, 
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Building,
+  GraduationCap,
   Briefcase,
   CheckCircle,
   ArrowLeft,
@@ -28,61 +28,123 @@ import {
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import axios from 'axios';
 
 export default function Inscription() {
+  const API_URL = "http://127.0.0.1:8000/api/yes2025.v1.0.0";
   const [formData, setFormData] = useState({
     // Informations personnelles
     prenom: '',
     nom: '',
     email: '',
     telephone: '',
-    dateNaissance: '',
-    genre: '',
-    
+    // dateNaissance: '',
+    // genre: '',
+
     // Localisation
     pays: '',
     ville: '',
-    
+
     // Informations professionnelles
-    statut: '',
+    // statut: '',
     organisation: '',
-    poste: '',
-    secteurActivite: '',
-    experienceProfessionnelle: '',
-    
-    // Formation
-    niveauEtudes: '',
+    // poste: '',
+    // secteurActivite: '',
+    // experienceProfessionnelle: '',
+
+    // // Formation
+    // niveauEtudes: '',
     domainEtudes: '',
-    etablissement: '',
-    
+    // etablissement: '',
+
     // Participation à la conférence
-    modeParticipation: '',
+    // modeParticipation: '',
     motivations: '',
-    attentes: [],
+    // attentes: [],
     thematiquesInteret: [],
-    
+
     // Projets et initiatives
-    aUnProjet: false,
-    descriptionProjet: '',
-    chercheFinancement: false,
-    typeFinancement: [],
-    
+    // aUnProjet: false,
+    // descriptionProjet: '',
+    // chercheFinancement: false,
+    // typeFinancement: [],
+
     // Networking
-    souhaiteReseautage: true,
-    domainesReseautage: [],
-    
+    // souhaiteReseautage: true,
+    // domainesReseautage: [],
+
     // Informations supplémentaires
-    commentaires: '',
+    // commentaires: '',
     newsletterAccord: false,
     conditionsAccord: false,
-    partageInfosAccord: false
+    // partageInfosAccord: false
   });
+
+  const [errors, setErrors] = useState({});
+
+  //  const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setErrors({}); // reset erreurs
+
+  //   try {
+  //     await axios.post("http://localhost:8000/api/inscription", formData);
+  //     alert("Inscription réussie !");
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 422) {
+  //       setErrors(error.response.data.errors); // Laravel renvoie errors
+  //     }
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+    setIsSubmitting(true);
+
+    try {
+      // Préparer les données attendues par ton backend
+      const payload = {
+        prenom: formData.prenom,
+        nom: formData.nom,
+        email: formData.email,
+        telephone: formData.telephone,
+        pays: formData.pays,
+        ville: formData.ville,
+        organisation: formData.organisation,
+        domaines: formData.secteurActivite ? [formData.secteurActivite] : [], // backend attend un array
+        motivations: formData.motivations,
+        thematiquesInteret: formData.thematiquesInteret,
+        newsletterAccord: formData.newsletterAccord,
+        conditionsAccord: formData.conditionsAccord,
+        password: "youth explore 2025",
+      };
+
+      const response = await axios.post(`${API_URL}/inscription`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(response.data);
+
+      // Si succès → afficher confirmation
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Erreur API:", error.response?.data || error.message);
+      if (error.response && error.response.status === 422) {
+        setErrors(error.response.data.errors); // Laravel renvoie errors
+      }
+      // alert("Une erreur est survenue : " + (error.response?.data?.message || "Vérifiez vos champs."));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const totalSteps = 5;
+  const totalSteps = 3;
 
   const handleInputChange = (name, value) => {
     setFormData(prev => ({
@@ -94,7 +156,7 @@ export default function Inscription() {
   const handleCheckboxChange = (name, value, checked) => {
     setFormData(prev => ({
       ...prev,
-      [name]: checked 
+      [name]: checked
         ? [...(prev[name] || []), value]
         : (prev[name] || []).filter(item => item !== value)
     }));
@@ -112,24 +174,24 @@ export default function Inscription() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulation d'envoi
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setIsSubmitting(false);
-    }, 2000);
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+
+  //   // Simulation d'envoi
+  //   setTimeout(() => {
+  //     setIsSubmitted(true);
+  //     setIsSubmitting(false);
+  //   }, 2000);
+  // };
 
   const getStepTitle = (step) => {
     const titles = {
       1: 'Informations personnelles',
       2: 'Profil professionnel',
-      3: 'Formation et éducation',
-      4: 'Participation et projets',
-      5: 'Finalisation'
+      3: 'Finalisation',
+      // 4: 'Participation et projets',
+      // 5: 'Finalisation'
     };
     return titles[step];
   };
@@ -154,7 +216,7 @@ export default function Inscription() {
                 Merci pour votre inscription à Youth Explore 2025. Vous recevrez un email de confirmation avec tous les détails.
               </p>
               <Link to={"/"}>
-                <Button className="bg-blue-800 hover:bg-blue-900 text-white">
+                <Button className="bg-blue-700 hover:bg-blue-900 text-white">
                   Retour à l'accueil
                 </Button>
               </Link>
@@ -166,7 +228,7 @@ export default function Inscription() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-400 to-indigo-200 p-4">
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center justify-between mb-6">
@@ -177,7 +239,7 @@ export default function Inscription() {
             </Button>
           </Link>
           <div className="flex items-center space-x-2">
-            <img src={yex2025} alt="yex2025 logo" className='w-[200px]'/>
+            <img src={yex2025} alt="yex2025 logo" className='w-[200px]' />
             {/* <div className="w-10 h-10 bg-gradient-to-r from-blue-800 to-indigo-900 rounded-lg flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-yellow-400" />
             </div>
@@ -187,17 +249,17 @@ export default function Inscription() {
         </div>
 
         <div className="text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-200 mb-4">
             Inscription à la Conférence
           </h1>
-          <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
+          <div className="flex items-center justify-center space-x-4 text-sm text-gray-100">
             <div className="flex items-center space-x-1">
-              <Calendar className="w-4 h-4 text-yellow-500" />
-              <span>27 novembre 2025 de </span> 
+              <Calendar className="w-4 h-4 text-blue-500" />
+              <span>27 novembre 2025 de </span>
               <span>8H30 à 16h30</span>
             </div>
             <div className="flex items-center space-x-1">
-              <MapPin className="w-4 h-4 text-yellow-500" />
+              <MapPin className="w-4 h-4 text-blue-500" />
               <span>UNIPOD- Université de Lomé </span>
             </div>
           </div>
@@ -210,7 +272,7 @@ export default function Inscription() {
             <span className="text-sm text-gray-600">{Math.round((currentStep / totalSteps) * 100)}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
+            <div
               className="bg-gradient-to-r from-blue-600 to-indigo-600 h-2 rounded-full transition-all duration-300"
               style={{ width: `${(currentStep / totalSteps) * 100}%` }}
             ></div>
@@ -224,17 +286,48 @@ export default function Inscription() {
       {/* Form */}
       <div className="max-w-4xl mx-auto">
         <Card className="border-0 shadow-xl">
-          <CardHeader className="bg-gradient-to-r from-blue-800 to-indigo-900 text-white rounded-t-lg">
+          <CardHeader className="bg-gradient-to-r from-blue-800 to-indigo-900 text-white rounded-t-lg w-full h-[50px] flex items-center">
             <CardTitle className="flex items-center space-x-2">
-              {currentStep === 1 && <User className="w-5 h-5" />}
-              {currentStep === 2 && <Briefcase className="w-5 h-5" />}
-              {currentStep === 3 && <GraduationCap className="w-5 h-5" />}
-              {currentStep === 4 && <Heart className="w-5 h-5" />}
-              {currentStep === 5 && <CheckCircle className="w-5 h-5" />}
+              {currentStep === 1 && <User className="w-7 h-7" />}
+              {currentStep === 2 && <Building className="w-5 h-5" />}
+              {currentStep === 3 && <CheckCircle className="w-5 h-5" />}
+              {/* {currentStep === 4 && <Heart className="w-5 h-5" />}
+              {currentStep === 5 && <GraduationCap className="w-5 h-5" />} */}
               <span>{getStepTitle(currentStep)}</span>
             </CardTitle>
           </CardHeader>
-          
+
+          {errors.prenom && (
+            <span style={{ color: "red" }}>{errors.prenom[0]}</span>
+          )}
+          {errors.nom && (
+            <span style={{ color: "red" }}>{errors.nom[0]}</span>
+          )}
+          {errors.email && (
+            <span style={{ color: "red" }}>{errors.email[0]}</span>
+          )}
+          {errors.telephone && (
+            <span style={{ color: "red" }}>{errors.telephone[0]}</span>
+          )}
+          {errors.pays && (
+            <span style={{ color: "red" }}>{errors.pays[0]}</span>
+          )}
+          {errors.ville && (
+            <span style={{ color: "red" }}>{errors.ville[0]}</span>
+          )}
+          {errors && (
+            <span style={{ color: "red" }}>{errors[0]}</span>
+          )}
+          {errors.prenom && (
+            <span style={{ color: "red" }}>{errors.prenom[0]}</span>
+          )}
+          {errors.prenom && (
+            <span style={{ color: "red" }}>{errors.prenom[0]}</span>
+          )}
+          {errors.prenom && (
+            <span style={{ color: "red" }}>{errors.prenom[0]}</span>
+          )}
+
           <CardContent className="p-8">
             <form onSubmit={handleSubmit}>
               {/* Étape 1: Informations personnelles */}
@@ -246,7 +339,8 @@ export default function Inscription() {
                 >
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <Label htmlFor="prenom">Prénom *</Label>
+                      <Label htmlFor="prenom">Prénoms *</Label>
+
                       <Input
                         id="prenom"
                         value={formData.prenom}
@@ -254,6 +348,9 @@ export default function Inscription() {
                         placeholder="Votre prénom"
                         required
                       />
+                      {errors.prenom && (
+                        <span style={{ color: "red" }}>{errors.prenom[0]}</span>
+                      )}
                     </div>
                     <div>
                       <Label htmlFor="nom">Nom *</Label>
@@ -291,7 +388,7 @@ export default function Inscription() {
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-3 gap-6">
+                  {/* <div className="grid md:grid-cols-3 gap-6">
                     <div>
                       <Label htmlFor="dateNaissance">Date de naissance</Label>
                       <Input
@@ -314,7 +411,7 @@ export default function Inscription() {
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
@@ -332,8 +429,12 @@ export default function Inscription() {
                           <SelectItem value="cote-ivoire">Côte d'Ivoire</SelectItem>
                           <SelectItem value="mali">Mali</SelectItem>
                           <SelectItem value="niger">Niger</SelectItem>
-                          <SelectItem value="ghana">Ghana</SelectItem>
-                          <SelectItem value="nigeria">Nigéria</SelectItem>
+                          <SelectItem value="guinée">Guinée</SelectItem>
+                          <SelectItem value="madagascar">Madagascar</SelectItem>
+                          <SelectItem value="république démocratique du Congo (RDC)">République démocratique du Congo (RDC)</SelectItem>
+                          <SelectItem value="gabon">Gabon</SelectItem>
+                          <SelectItem value="tchad">Tchad</SelectItem>
+                          <SelectItem value="république du Congo">République du Congo</SelectItem>
                           <SelectItem value="autre">Autre</SelectItem>
                         </SelectContent>
                       </Select>
@@ -359,25 +460,48 @@ export default function Inscription() {
                   animate={{ opacity: 1, x: 0 }}
                   className="space-y-6"
                 >
-                  <div>
-                    <Label>Statut professionnel *</Label>
-                    <Select onValueChange={(value) => handleInputChange('statut', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Votre statut actuel" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="etudiant">Étudiant</SelectItem>
-                        <SelectItem value="employe">Employé</SelectItem>
-                        <SelectItem value="entrepreneur">Entrepreneur</SelectItem>
-                        <SelectItem value="freelance">Freelance</SelectItem>
-                        <SelectItem value="chercheur">Chercheur</SelectItem>
-                        <SelectItem value="demandeur-emploi">Demandeur d'emploi</SelectItem>
-                        <SelectItem value="autre">Autre</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
                   <div className="grid md:grid-cols-2 gap-6">
+                    {/* <div>
+                      <Label>Statut professionnel *</Label>
+                      <Select onValueChange={(value) => handleInputChange('statut', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Votre statut actuel" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="etudiant">Étudiant</SelectItem>
+                          <SelectItem value="employe">Employé</SelectItem>
+                          <SelectItem value="entrepreneur">Entrepreneur</SelectItem>
+                          <SelectItem value="freelance">Freelance</SelectItem>
+                          <SelectItem value="chercheur">Chercheur</SelectItem>
+                          <SelectItem value="demandeur-emploi">Demandeur d'emploi</SelectItem>
+                          <SelectItem value="autre">Autre</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div> */}
+
+                    <div>
+                      <Label>Domaine d'activité *</Label>
+                      <Select onValueChange={(value) => handleInputChange('secteurActivite', value)}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sélectionnez votre secteur" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem className="hover:bg-blue-700" value="technologie">Technologie & Numérique</SelectItem>
+                          <SelectItem value="finance">Finance & Banque</SelectItem>
+                          <SelectItem value="agriculture">Agriculture & Agrobusiness</SelectItem>
+                          <SelectItem value="education">Éducation & Formation</SelectItem>
+                          <SelectItem value="sante">Santé & Médical</SelectItem>
+                          <SelectItem value="energie">Énergie & Environnement</SelectItem>
+                          <SelectItem value="industrie">Industrie & Manufacturing</SelectItem>
+                          <SelectItem value="commerce">Commerce & Retail</SelectItem>
+                          <SelectItem value="media">Médias & Communication</SelectItem>
+                          <SelectItem value="ong">ONG & Développement</SelectItem>
+                          <SelectItem value="gouvernement">Secteur Public</SelectItem>
+                          <SelectItem value="autre">Autre</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
                     <div>
                       <Label htmlFor="organisation">Organisation / Entreprise</Label>
                       <Input
@@ -387,7 +511,7 @@ export default function Inscription() {
                         placeholder="Nom de votre organisation"
                       />
                     </div>
-                    <div>
+                    {/* <div>
                       <Label htmlFor="poste">Poste / Fonction</Label>
                       <Input
                         id="poste"
@@ -395,33 +519,21 @@ export default function Inscription() {
                         onChange={(e) => handleInputChange('poste', e.target.value)}
                         placeholder="Votre fonction actuelle"
                       />
-                    </div>
+                    </div> */}
                   </div>
 
                   <div>
-                    <Label>Secteur d'activité</Label>
-                    <Select onValueChange={(value) => handleInputChange('secteurActivite', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionnez votre secteur" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="technologie">Technologie & Numérique</SelectItem>
-                        <SelectItem value="finance">Finance & Banque</SelectItem>
-                        <SelectItem value="agriculture">Agriculture & Agrobusiness</SelectItem>
-                        <SelectItem value="education">Éducation & Formation</SelectItem>
-                        <SelectItem value="sante">Santé & Médical</SelectItem>
-                        <SelectItem value="energie">Énergie & Environnement</SelectItem>
-                        <SelectItem value="industrie">Industrie & Manufacturing</SelectItem>
-                        <SelectItem value="commerce">Commerce & Retail</SelectItem>
-                        <SelectItem value="media">Médias & Communication</SelectItem>
-                        <SelectItem value="ong">ONG & Développement</SelectItem>
-                        <SelectItem value="gouvernement">Secteur Public</SelectItem>
-                        <SelectItem value="autre">Autre</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Label className="mb-1" htmlFor="motivations">Motivations pour participer *</Label>
+                    <Textarea
+                      id="motivations"
+                      value={formData.motivations}
+                      onChange={(e) => handleInputChange('motivations', e.target.value)}
+                      placeholder="Expliquez pourquoi vous souhaitez participer à Youth Explore 2025..."
+                      rows={4}
+                      required
+                    />
                   </div>
-
-                  <div>
+                  {/* <div>
                     <Label>Expérience professionnelle</Label>
                     <RadioGroup 
                       value={formData.experienceProfessionnelle}
@@ -444,12 +556,12 @@ export default function Inscription() {
                         <Label htmlFor="expert">Expert (10+ ans)</Label>
                       </div>
                     </RadioGroup>
-                  </div>
+                  </div> */}
                 </motion.div>
               )}
 
               {/* Étape 3: Formation et éducation */}
-              {currentStep === 3 && (
+              {/* {currentStep === 5 && (
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -493,10 +605,10 @@ export default function Inscription() {
                     </div>
                   </div>
                 </motion.div>
-              )}
+              )} */}
 
               {/* Étape 4: Participation et projets */}
-              {currentStep === 4 && (
+              {/* {currentStep === 4 && (
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -590,33 +702,35 @@ export default function Inscription() {
                     )}
                   </div>
                 </motion.div>
-              )}
+              )} */}
 
               {/* Étape 5: Finalisation */}
-              {currentStep === 5 && (
+              {currentStep === 3 && (
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   className="space-y-6"
                 >
                   <div>
-                    <Label>Domaines pour le networking (sélection multiple)</Label>
+                    {/* <Label>Domaines pour le networking (sélection multiple)</Label> */}
+                    <Label>Thématiques d'intérêt * (sélectionnez une ou plusieurs)</Label>
                     <div className="grid md:grid-cols-2 gap-4 mt-2">
                       {[
-                        'Entrepreneuriat',
-                        'Investissement',
-                        'Technologie',
-                        'Marketing',
-                        'Ressources humaines',
-                        'Développement durable',
-                        'Éducation',
-                        'Santé'
+                        'Emploi et entrepreneuriat des jeunes',
+                        'Éducation, innovation et transformation numérique',
+                        'Culture, diaspora et mobilité internationale',
+                        'Leadership et gouvernance inclusive',
+                        'Développement durable et climat',
+                        // 'Ressources humaines',
+                        // 'Développement durable',
+                        // 'Éducation',
+                        // 'Santé'
                       ].map((domaine) => (
                         <div key={domaine} className="flex items-center space-x-2">
                           <Checkbox
                             id={domaine}
-                            onCheckedChange={(checked) => 
-                              handleCheckboxChange('domainesReseautage', domaine, checked)
+                            onCheckedChange={(checked) =>
+                              handleCheckboxChange('thematiquesInteret', domaine, checked)
                             }
                           />
                           <Label htmlFor={domaine}>{domaine}</Label>
@@ -625,7 +739,7 @@ export default function Inscription() {
                     </div>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <Label htmlFor="commentaires">Commentaires ou questions</Label>
                     <Textarea
                       id="commentaires"
@@ -634,7 +748,7 @@ export default function Inscription() {
                       placeholder="Avez-vous des questions ou des commentaires particuliers ?"
                       rows={4}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="border-t pt-6 space-y-4">
                     <div className="flex items-start space-x-2">
@@ -660,7 +774,7 @@ export default function Inscription() {
                       </Label>
                     </div>
 
-                    <div className="flex items-start space-x-2">
+                    {/* <div className="flex items-start space-x-2">
                       <Checkbox
                         id="partageInfosAccord"
                         checked={formData.partageInfosAccord}
@@ -669,7 +783,7 @@ export default function Inscription() {
                       <Label htmlFor="partageInfosAccord" className="text-sm">
                         J'accepte que mes informations soient partagées avec les partenaires pour des opportunités pertinentes
                       </Label>
-                    </div>
+                    </div> */}
                   </div>
                 </motion.div>
               )}
@@ -681,7 +795,7 @@ export default function Inscription() {
                   variant="outline"
                   onClick={handlePrevStep}
                   disabled={currentStep === 1}
-                  className={currentStep === 1 ? 'invisible' : ''}
+                  className={currentStep === 1 ? 'invisible' : 'bg-blue-800 hover:bg-blue-900 text-white'}
                 >
                   Précédent
                 </Button>

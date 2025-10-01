@@ -4,17 +4,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, MapPin, Clock, Users, Globe, Mic, Lightbulb, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import Inscription from '@/Pages/Inscription';
 
 export default function KeyInfoSection() {
   const keyStats = [
-    { icon: MapPin, label: 'Lieu', value: 'Lomé + diffusion en ligne', color: 'text-red-600', bg: 'bg-red-100' },
+    { icon: MapPin, label: 'Lieu', value: 'UNIPOD,Lomé', color: 'text-red-600', bg: 'bg-red-200' },
     { icon: Calendar, label: 'Date', value: '27 novembre 2025', color: 'text-blue-600', bg: 'bg-blue-100' },
-    { icon: Clock, label: 'Durée', value: '1 journée complète', color: 'text-green-600', bg: 'bg-green-100' },
+    { icon: Clock, label: 'Durée', value: '08:30 AM-6:00 PM', color: 'text-green-600', bg: 'bg-green-100' },
     { icon: Users, label: 'Participants', value: '200 jeunes & professionnels', color: 'text-purple-600', bg: 'bg-purple-100' },
-    { icon: Globe, label: 'Pays représentés', value: '5 pays africains', color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    { icon: Globe, label: 'Pays représentés', value: '2 pays africains', color: 'text-yellow-600', bg: 'bg-yellow-100' },
     { icon: Mic, label: 'Intervenants', value: '6 experts inspirants', color: 'text-indigo-600', bg: 'bg-indigo-100' },
     { icon: Lightbulb, label: 'Panels', value: '3 sessions de haut niveau', color: 'text-teal-600', bg: 'bg-teal-100' },
-    { icon: Target, label: 'Opportunités', value: '+500 partagées', color: 'text-pink-600', bg: 'bg-pink-100' }
+    { icon: Target, label: 'Opportunités', value: '+200 partagées', color: 'text-pink-600', bg: 'bg-pink-100' }
   ];
 
   const expectedResults = [
@@ -29,7 +31,7 @@ export default function KeyInfoSection() {
       description: 'Experts, coachs et représentants d\'institutions'
     },
     {
-      number: '500+',
+      number: '+200',
       title: 'Opportunités partagées',
       description: 'Bourses, financements et programmes d\'incubation'
     }
@@ -132,13 +134,16 @@ export default function KeyInfoSection() {
           <p className="text-lg mb-6 opacity-90">
             Ne manquez pas cette opportunité unique de façonner votre avenir et celui de l'Afrique.
           </p>
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-blue-900 font-bold"
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Je réserve ma place
-          </Button>
+          <Link to={"/inscription"}>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-blue-900 font-bold cursor-pointer"
+    
+            // onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Je réserve ma place
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>

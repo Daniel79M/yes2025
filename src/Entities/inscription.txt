@@ -1,0 +1,104 @@
+{
+  "name": "Inscription",
+  "type": "object",
+  "properties": {
+    "prenom": {
+      "type": "string"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "dateNaissance": {
+      "type": "string",
+      "format": "date"
+    },
+    "genre": {
+      "type": "string"
+    },
+    "pays": {
+      "type": "string"
+    },
+    "ville": {
+      "type": "string"
+    },
+    "statut": {
+      "type": "string"
+    },
+    "organisation": {
+      "type": "string"
+    },
+    "poste": {
+      "type": "string"
+    },
+    "secteurActivite": {
+      "type": "string"
+    },
+    "experienceProfessionnelle": {
+      "type": "string"
+    },
+    "niveauEtudes": {
+      "type": "string"
+    },
+    "domainEtudes": {
+      "type": "string"
+    },
+    "etablissement": {
+      "type": "string"
+    },
+    "modeParticipation": {
+      "type": "string"
+    },
+    "motivations": {
+      "type": "string"
+    },
+    "thematiquesInteret": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "aUnProjet": {
+      "type": "boolean"
+    },
+    "descriptionProjet": {
+      "type": "string"
+    },
+    "chercheFinancement": {
+      "type": "boolean"
+    },
+    "domainesReseautage": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commentaires": {
+      "type": "string"
+    },
+    "newsletterAccord": {
+      "type": "boolean"
+    },
+    "conditionsAccord": {
+      "type": "boolean"
+    },
+    "partageInfosAccord": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "prenom",
+    "nom",
+    "email",
+    "telephone",
+    "ville",
+    "modeParticipation",
+    "motivations",
+    "conditionsAccord"
+  ]
+}

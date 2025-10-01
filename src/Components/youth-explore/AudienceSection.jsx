@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Rocket, GraduationCap, Users, Briefcase, Building } from 'lucide-react';
+import { Rocket, GraduationCap, Users, Briefcase, Building, Club, Building2, Building2Icon, Landmark, Handshake } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
@@ -11,35 +11,42 @@ export default function AudienceSection() {
       title: 'Jeunes entrepreneurs & porteurs de projets',
       description: 'Développez vos idées et trouvez les ressources pour les concrétiser',
       color: 'text-yellow-600',
-      bg: 'bg-yellow-100'
+      bg: 'bg-yellow-200'
     },
     {
       icon: GraduationCap,
       title: 'Étudiants & chercheurs',
       description: 'Découvrez les opportunités académiques et professionnelles',
       color: 'text-blue-600',
-      bg: 'bg-blue-100'
+      bg: 'bg-blue-200'
     },
     {
-      icon: Users,
+      icon: Building2,
       title: 'Associations & organisations de jeunesse',
       description: 'Renforcez vos capacités et élargissez votre impact',
       color: 'text-green-600',
-      bg: 'bg-green-100'
+      bg: 'bg-green-200'
     },
     {
-      icon: Briefcase,
+      icon: Handshake,
       title: 'Décideurs publics & privés',
       description: 'Investissez dans l\'avenir et créez des synergies durables',
       color: 'text-purple-600',
-      bg: 'bg-purple-100'
+      bg: 'bg-purple-300'
     },
     {
-      icon: Building,
+      icon: Landmark,
       title: 'Partenaires techniques & financiers',
       description: 'Connectez-vous avec les talents de demain',
       color: 'text-indigo-600',
-      bg: 'bg-indigo-100'
+      bg: 'bg-indigo-200'
+    },
+    {
+      icon: Users,
+      title: 'Toutes personnes curieux',
+      description: "En quête d'informations ou de compétences liées aux opportunités et réseautage.",
+      color: 'text-red-600',
+      bg: 'bg-red-200'
     }
   ];
 
@@ -68,7 +75,7 @@ export default function AudienceSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-6">
           {audiences.map((audience, index) => (
             <motion.div
               key={audience.title}
@@ -77,14 +84,17 @@ export default function AudienceSection() {
               transition={{ duration: 0.6, delay: 0.1 * index }}
               viewport={{ once: true }}
             >
-              <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group bg-gray-50/50">
+              <Card className="h-full  shadow-lg hover:shadow-xl border-2 border-gray-400 transition-all duration-300 hover:-translate-y-2 group bg-gray-50/50">
                 <CardContent className="p-6 text-center">
-                  <div className={`w-16 h-16 ${audience.bg} rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform`}>
-                    <audience.icon className={`w-8 h-8 ${audience.color}`} />
+                  <div className={`w-26 h-26 ${audience.bg} rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform`}>
+                    <audience.icon className={`w-15 h-15 ${audience.color}`} />
                   </div>
-                  <h3 className="text-md font-bold text-gray-900">
+                  <h3 className="text-md font-bold text-gray-900 text-2xl">
                     {audience.title}
                   </h3>
+                  <p className='mt-5 bo'>
+                    {audience.description}
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>

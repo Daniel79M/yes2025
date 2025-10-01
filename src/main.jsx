@@ -5,6 +5,7 @@ import App from './App';
 import "./index.css";
 import Home from './Pages/Home';
 import Inscription from './Pages/Inscription';
+import AdminDashboard from './Pages/AdminDashboard';
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     path: "/Home",
     element: <Home />,
   },
+  // {
+  //   path: "/AdminDashboard",
+  //   element: <AdminDashboard />,
+  // },
   {
      path: "/Inscription",
     element: <Inscription />
